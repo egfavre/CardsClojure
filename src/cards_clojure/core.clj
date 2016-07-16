@@ -28,18 +28,25 @@
   
 (defn four-of-a-kind? [hand]
   (let [ranks (set (map :rank hand))]
-    ((= 1 (count ranks)))))
+    (= 1 (count ranks))))
 
-(defn three-of-a-kind? [hand])
- 
+(defn three-of-a-kind? [hand]
+  (let [ranks (sort (vec (map :rank hand)))]
+    (or 
+        (and (= (nth ranks 3) (nth ranks 2)) (= (nth ranks 2) (nth ranks 1)) (not= (nth ranks 0) (nth ranks 1)))
+        (and (= (nth ranks 0) (nth ranks 1)) (= (nth ranks 1) (nth ranks 2)) (not= (nth ranks 2) (nth ranks 3))))))
+  
 
 (defn two-pair? [hand])
+  
       
 (defn -main []
   (let [deck (create-deck)
         hands (create-hands deck)
         ;flushes (filter flush? hands)]
         ;straights (filter straight? hands)]
-        straight-flushes (filter flush? (filter straight? hands))]
-    (count straight-flushes)))
+        ;straight-flushes (filter flush? (filter straight? hands))]
+        ;fours (filter four-of-a-kind? hands)]
+        threes (filter three-of-a-kind? hands)]
+    (count threes)))
    
