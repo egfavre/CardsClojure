@@ -37,7 +37,9 @@
         (and (= (nth ranks 0) (nth ranks 1)) (= (nth ranks 1) (nth ranks 2)) (not= (nth ranks 2) (nth ranks 3))))))
   
 
-(defn two-pair? [hand])
+(defn two-pair? [hand]
+  (let [ranks (sort (vec (map :rank hand)))]
+    (and (= (nth ranks 0) (nth ranks 1)) (= (nth ranks 2) (nth ranks 3)) (not= (nth ranks 1) (nth ranks 2)))))
   
       
 (defn -main []
@@ -47,6 +49,7 @@
         ;straights (filter straight? hands)]
         ;straight-flushes (filter flush? (filter straight? hands))]
         ;fours (filter four-of-a-kind? hands)]
-        threes (filter three-of-a-kind? hands)]
-    (count threes)))
+        ;threes (filter three-of-a-kind? hands)]
+        pairs (filter two-pair? hands)]
+    (count pairs)))
    
